@@ -131,28 +131,30 @@ class App {
 	_newItem(type, e) {
 		e.preventDefault();
 
-		const name = document.getElementById(`${type}-name`).value;
-		const calories = document.getElementById(`${type}-calories`).value;
+		const name = document.getElementById(`${type}-name`);
+		const calories = document.getElementById(`${type}-calories`);
 
-		//Validate input
-		if (name === '' || calories === '') {
-			alert('Please fill in the form');
+		//Validate inputs
+		if (name.value === '' || calories.value === '') {
+			alert('Please fill in meal/workout fields');
 			return;
 		}
 
 		if (type === 'meal') {
-			const meal = new Meal(name, +calories); //+calories converts string to number
+			const meal = new Meal(name.value, +calories.value); //+calories.value converts string to number
 			this._tracker.addMeal(meal);
 		} else {
-			const workout = new Workout(name, +calories); //+calories converts string to number
+			const workout = new Workout(name.value, +calories.value);
 			this._tracker.addWorkout(workout);
 		}
 
-		name = '';
-		calories = '';
+		name.value = '';
+		calories.value = '';
 
 		const collapseItem = document.getElementById(`collapse-${type}`);
-		const bsCollapse = new bootstrap.Collapse(collapseItem, { toggle: true });
+		const bsCollapse = new bootstrap.Collapse(collapseItem, {
+			toggle: true,
+		});
 	}
 }
 
